@@ -39,9 +39,10 @@ public class CaptchaServiceImpl implements CaptchaService {
     public R<String> verify(CaptchaVo captchaVo) {
         String captcha = (String) redisUtil.get(captchaVo.getEmail());
         System.out.println("verify "+captchaVo.getEmail()+"\t"+captchaVo.getCaptcha()+"\t"+captcha);
-        if (!captchaVo.getCaptcha().equals(captcha)){
-            return R.fail("验证失败");
+        if (captchaVo.getCaptcha().equals(captcha)){
+            redisUtil.expire(captchaVo.getEmail(),0);
+            return R.success("验证成功");
         };
-        return R.success();
+        return R.fail("验证失败");
     }
 }

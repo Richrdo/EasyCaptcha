@@ -1,9 +1,11 @@
 package com.timegoesby.captcha.service.impl;
 
+import com.sun.mail.smtp.SMTPAddressFailedException;
 import com.timegoesby.captcha.service.CaptchaService;
 import com.timegoesby.captcha.service.EmailService;
 import com.timegoesby.captcha.vo.EmailVo;
 import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.Level;
 import org.bouncycastle.mime.MimeMultipartContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,8 +98,12 @@ public class EmailServiceImpl implements EmailService {
             transport.connect(from,password);
 
             transport.sendMessage(mimeMessage,mimeMessage.getAllRecipients());
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (SMTPAddressFailedException e){
+            log.debug(e.getReturnCode()+" Send to "+e.getAddress().toString() +"\t"+e.getMessage());
+        }catch (MessagingException | UnsupportedEncodingException e){
+            log.warn(e.getMessage());
+        }finally {
+
         }
     }
 }

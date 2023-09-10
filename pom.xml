@@ -11,7 +11,7 @@
     <groupId>com.timegoesby</groupId>
     <artifactId>Captcha</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Captcha</name>
     <description>Captcha</description>
 
