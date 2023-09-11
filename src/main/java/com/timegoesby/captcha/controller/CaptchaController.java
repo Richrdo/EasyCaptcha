@@ -28,10 +28,7 @@ public class CaptchaController {
 
     @RequestMapping("/send")
     public R<String> sendCaptcha(@RequestBody EmailVo emailVo){
-
-        emailService.sendCaptcha(emailVo);
-        System.out.println(emailVo.toString());
-        return R.success();
+        return emailService.sendCaptcha(emailVo);
     }
 
     @RequestMapping("/verify")
